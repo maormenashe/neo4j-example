@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  # neo4jexample:
+  #   environment:
+  #     - ASPNETCORE_ENVIRONMENT=Development
+  #     - ASPNETCORE_HTTP_PORTS=8080
+  #     - ASPNETCORE_HTTPS_PORTS=8081
+  #   ports:
+  #     - "8080"
+  #     - "8081"
+  #   volumes:
+  #     - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+  #     - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  neo4j:
+    environment:
+      - NEO4J_AUTH=neo4j/testpassword # Set Neo4j credentials (user/password)
+    restart: always
+    ports:
+      - "7474:7474" # Neo4j web interface
+      - "7687:7687" # Bolt protocol (for database queries)
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/import
+      - neo4j_plugins:/plugins

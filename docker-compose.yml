@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  # neo4jexample:
+  #   image: ${DOCKER_REGISTRY-}neo4jexample
+  #   build:
+  #     context: .
+  #     dockerfile: Neo4jExample/Dockerfile
+  neo4j:
+    image: neo4j:5.10.0
+    container_name: neo4j
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  neo4j_plugins:
