@@ -1,6 +1,4 @@
 ﻿using Neo4j.Driver;
-using Neo4jExample.Abstractions;
-using Neo4jExample.Models;
 
 namespace Neo4jExample.Repositories;
 
