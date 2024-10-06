@@ -1,4 +1,5 @@
 ﻿using Neo4jClient;
+using Neo4jClient.Cypher;
 
 namespace Neo4jExample.Repositories;
 
@@ -8,11 +9,20 @@ public class Neo4jClientBookRepository(IBoltGraphClient client) : IBookRepositor
 
     public async Task<Book?> GetBookByTitleAsync(string title)
     {
+        CypherQuery query = _client.Cypher
+          .Match("(b:Book {title: $title})")
+          .WithParam("title", title)
+          .Return(b => b.As<BookCamelCase>())
+          .Query;
+
+        Console.WriteLine($"{nameof(GetBookByTitleAsync)} Query: {query.DebugQueryText}");
+
         var result = await _client.Cypher
           .Match("(b:Book {title: $title})")
           .WithParam("title", title)
           .Return(b => b.As<BookCamelCase>())
           .ResultsAsync;
+
 
         BookCamelCase targetBook = result.SingleOrDefault()!;
 

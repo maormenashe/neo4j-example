@@ -19,7 +19,7 @@ ArgumentNullException.ThrowIfNull(neo4jOptions);
 builder.Services.AddSingleton<IBoltGraphClient>(provider =>
 {
     var client = new BoltGraphClient(neo4jOptions.Uri, neo4jOptions.User, neo4jOptions.Password);
-    client.ConnectAsync().Wait(); // Connect asynchronously to the Neo4j database
+    client.ConnectAsync().GetAwaiter().GetResult(); // Connect asynchronously to the Neo4j database
     return client;
 });
 
