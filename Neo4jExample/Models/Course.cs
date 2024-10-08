@@ -2,10 +2,10 @@
 
 public class Course
 {
-    public long Id { get; set; }
-    public string? Identifier { get; set; }
-    public string? Title { get; set; }
-    public string? Teacher { get; set; }
+    public long id { get; set; }
+    public string? identifier { get; set; }
+    public string? title { get; set; }
+    public string? teacher { get; set; }
 
     public Course()
     {

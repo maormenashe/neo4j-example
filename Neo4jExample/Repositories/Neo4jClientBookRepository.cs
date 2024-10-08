@@ -12,7 +12,13 @@ public class Neo4jClientBookRepository(IBoltGraphClient client) : IBookRepositor
         CypherQuery query = _client.Cypher
           .Match("(b:Book {title: $title})")
           .WithParam("title", title)
-          .Return(b => b.As<BookCamelCase>())
+          .Return(b => new
+          {
+              Node = b.As<BookCamelCase>(),
+              ElementId = Return.As<string>("elementId(b)"),
+              Labels = Return.As<IEnumerable<string>>("labels(b)"),
+              Identity = Return.As<long>("id(b)"),
+          })
           .Query;
 
         Console.WriteLine($"{nameof(GetBookByTitleAsync)} Query: {query.DebugQueryText}");
@@ -20,16 +26,22 @@ public class Neo4jClientBookRepository(IBoltGraphClient client) : IBookRepositor
         var result = await _client.Cypher
           .Match("(b:Book {title: $title})")
           .WithParam("title", title)
-          .Return(b => b.As<BookCamelCase>())
+          .Return(b => new
+          {
+              Node = b.As<BookCamelCase>(),
+              ElementId = Return.As<string>("elementId(b)"),
+              Labels = Return.As<IEnumerable<string>>("labels(b)"),
+              Identity = Return.As<long>("id(b)"),
+          })
           .ResultsAsync;
 
 
-        BookCamelCase targetBook = result.SingleOrDefault()!;
+        var targetBook = result.SingleOrDefault()!;
 
         return new Book()
         {
-            Title = targetBook.title,
-            Pages = targetBook.pages,
+            Title = targetBook.Node.title,
+            Pages = targetBook.Node.pages,
         };
     }
 
