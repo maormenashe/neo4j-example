@@ -1,15 +1,12 @@
 ﻿namespace Neo4jExample.Models;
 
-public class Course
+public class Lesson
 {
     public long id { get; set; }
     public string? identifier { get; set; }
     public string? title { get; set; }
-    public string? teacher { get; set; }
-    public List<Lesson> lessons { get; set; } = [];
 
-
-    public Course()
+    public Lesson()
     {
     }
 }

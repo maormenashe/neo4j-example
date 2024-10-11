@@ -1,4 +1,4 @@
-using Neo4jClient;
+using Neo4jExample.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -25,6 +25,9 @@ builder.Services.AddSingleton<IBoltGraphClient>(provider =>
 
 //builder.Services.AddScoped<IBookRepository, Neo4jDriverBookRepository>(); // For Neo4j .NET .Signed Driver
 builder.Services.AddScoped<IBookRepository, Neo4jClientBookRepository>(); // For  Neo4jClient
+
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<CourseService>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
