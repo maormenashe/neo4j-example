@@ -34,4 +34,3 @@ public class CourseRepository(IBoltGraphClient client) : ICourseRepository
         return result.SingleOrDefault();
     }
 }
-
