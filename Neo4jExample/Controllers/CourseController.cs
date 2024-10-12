@@ -27,4 +27,50 @@ public class CourseController(ILogger<CourseController> logger, CourseService co
 
         return Ok(course);
     }
+
+    // POST: api/course/{courseIdentifier}/lessons/{lessonIdentifier}
+    [HttpPost("{courseIdentifier}/lessons/{lessonIdentifier}")]
+    public async Task<IActionResult> AddLessonToCourse(string courseIdentifier, string lessonIdentifier, [FromBody] BelongsTo belongsTo)
+    {
+        try
+        {
+            await courseService.CreateBelongsToRelationAsync(courseIdentifier, lessonIdentifier, belongsTo);
+            return Ok("Lesson added to course successfully.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error: {ex.Message}");
+        }
+    }
+
+    [HttpGet("/lessons")]
+    public async Task<IActionResult> GetAllCoursesWithLessons()
+    {
+        try
+        {
+            var coursesWithLessons = await courseService.GetAllCoursesWithLessonsAsync();
+            return Ok(coursesWithLessons);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error: {ex.Message}");
+        }
+    }
+
+    [HttpGet("{courseIdentifier}/lessons")]
+    public async Task<IActionResult> GetCourseWithLessons(string courseIdentifier)
+    {
+        try
+        {
+            var coursesWithLessons = await courseService.GetCourseWithLessonsAsync(courseIdentifier);
+            if (coursesWithLessons == null)
+                return NotFound();
+
+            return Ok(coursesWithLessons);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest($"Error: {ex.Message}");
+        }
+    }
 }

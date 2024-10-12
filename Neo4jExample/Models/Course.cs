@@ -13,3 +13,15 @@ public class Course
     {
     }
 }
+
+public class CourseWithLessons
+{
+    public Course? Course { get; set; }
+    public List<LessonWithRelationship>? Lessons { get; set; }
+}
+
+public class LessonWithRelationship
+{
+    public Lesson? Lesson { get; set; }
+    public BelongsTo? Relationship { get; set; }
+}
